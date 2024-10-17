@@ -1,16 +1,15 @@
-type Student = {
+export type Student = {
     id: number;
     fullName: string;
     dateOfBirth: string;
-    sections: Section[];
+    sections: number[];
     photoUrl: string;
     isActive: boolean;
+    sectionItems?: Section[];
 };
 
-// Тип для секции
-type Section = {
+export type Section = {
     id: number;
     name: string;
-    enrolledDate: string;
-    students: Student[];
+    studentItems?: Student[];
 };
