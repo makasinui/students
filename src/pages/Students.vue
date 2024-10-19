@@ -1,52 +1,11 @@
 <template>
-    <v-table>
-        <thead>
-            <tr>
-                <th>
-                   ФИО 
-                </th>
-                <th>
-                    Дата рождения
-                </th>
-                <th>
-                    Секции
-                </th>
-                <th>
-                    Фото
-                </th>
-                <th>
-                    Активность
-                </th>
-                <th>
-                    Действия
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="student in students" :key="student.id">
-                <td>
-                    {{ student.fullName }}
-                </td>
-                <td>
-                    {{ student.dateOfBirth }}
-                </td>
-                <td>
-                    <div v-for="section in student.sectionItems" :key="section.id">
-                        {{ section.name }}
-                    </div>
-                </td>
-                <td>
-                    {{ student.photoUrl }}
-                </td>
-                <td>
-                    {{ student.isActive ? "Да" : "Нет" }}
-                </td>
-                <td>
-                    
-                </td>
-            </tr>
-        </tbody>
-    </v-table>
+    <Table :rows="students" :columns="columns">
+        <template #sectionItems="{value}">
+            <div v-for="section in value">
+                {{ section.name }}
+            </div>
+        </template>
+    </Table>
     <Pagination 
         :page="page"
         :per-page="perPage"
@@ -60,6 +19,7 @@
 import { onMounted, ref, watch } from 'vue';
 import { useStore } from '../store';
 import Pagination from '../components/Pagination.vue';
+import Table from '../components/Table.vue';
 import { Student } from '../types';
 
 const store = useStore();
@@ -67,6 +27,33 @@ const page = ref(1);
 const perPage = ref(10);
 const lastPage = ref(1);
 const students = ref<Student[]>([]);
+
+const columns = [
+    {
+        key: 'id',
+        name: 'ID'
+    },
+    {
+        key: 'fullName',
+        name: 'ФИО'
+    },
+    {
+        key: 'dateOfBirth',
+        name: 'Дата рождения'
+    },
+    {
+        key: 'sectionItems',
+        name: 'Секции'
+    },
+    {
+        key: 'photoUrl',
+        name: 'Фото'
+    },
+    {
+        key: 'isActive',
+        name: 'Активность'
+    }
+];
 
 const fetch = () => {
     const {data, total} = store.getPaginatedStudents(page.value, perPage.value);

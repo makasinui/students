@@ -16,7 +16,7 @@ export const useStore = defineStore("store", {
               ...student,
               sectionItems: student.sections.map(id => sections.find(section => section.id === id)!)  
             }));
-
+            
             return studentsWithSections;
         },
         getSections(state): Section[] {
@@ -51,7 +51,7 @@ export const useStore = defineStore("store", {
         getPaginatedStudents(page: number = 1, perPage: number = 10) {
             const store = useStore();
             const students = this.getPaginatedList(store.getStudents, perPage);
-            console.log(students, students.length)
+            
             return {
                 data: students[page - 1] as Student[],
                 total: students.length as number
