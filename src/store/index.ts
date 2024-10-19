@@ -37,16 +37,13 @@ export const useStore = defineStore("store", {
     actions: {
         // function for get paginated list it returns [[], [], []]
         getPaginatedList(arr: Student[] | Section[], perPage: number) {
-            if(arr.length === perPage) {
-                return [arr];
-            }
             const paginatedList = [];
             while(arr.length >= perPage) {
                 paginatedList.push(arr.slice(0, perPage));
                 arr = arr.slice(perPage, arr.length)
             }
             paginatedList.push(arr);
-            return paginatedList.filter(Boolean);
+            return paginatedList.filter(item => item.length);
         },
         getPaginatedStudents(page: number = 1, perPage: number = 10) {
             const store = useStore();

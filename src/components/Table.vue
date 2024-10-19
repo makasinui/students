@@ -18,12 +18,25 @@
             </tr>
         </tbody>
     </v-table>
+    <Pagination 
+        :page="page"
+        :per-page="perPage"
+        :last-page="lastPage"
+        @update-page="(e: number) => emit('updatePage', e)"
+        @update-per-page="(e: number) => emit('updatePerPage', e)"
+    />
 </template>
 
 <script setup lang="ts">
+import Pagination from './Pagination.vue';
 const props = defineProps<{
     columns: {key: string, name: string}[]
     rows: any[]
+    page: number
+    perPage: number
+    lastPage: number
 }>();
+
+const emit = defineEmits(['updatePage', 'updatePerPage']);
 console.log(props.rows)
 </script>

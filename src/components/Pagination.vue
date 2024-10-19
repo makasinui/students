@@ -27,7 +27,6 @@ const props = defineProps<{
     lastPage: number
     perPage: number
 }>();
-console.log(props.lastPage)
 
 const emit = defineEmits(['updatePage', 'updatePerPage'])
 </script>

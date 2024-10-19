@@ -1,24 +1,24 @@
 <template>
-    <Table :rows="students" :columns="columns">
+    <Table 
+        :page="page" 
+        :perPage="perPage" 
+        :lastPage="lastPage"
+        :rows="students" 
+        :columns="columns"
+        @updatePage="(e) => page = e"
+        @updatePerPage="(e) => perPage = e"
+    >
         <template #sectionItems="{value}">
             <div v-for="section in value">
                 {{ section.name }}
             </div>
         </template>
     </Table>
-    <Pagination 
-        :page="page"
-        :per-page="perPage"
-        :last-page="lastPage"
-        @update-page="(e) => page = e"
-        @update-per-page="(e) => perPage = e"
-    />
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 import { useStore } from '../store';
-import Pagination from '../components/Pagination.vue';
 import Table from '../components/Table.vue';
 import { Student } from '../types';
 
