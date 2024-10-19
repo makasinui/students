@@ -4,12 +4,6 @@
   </Layout>
 </template>
 
-<script setup>
-import { computed } from 'vue';
-import { useStore } from './store';
+<script setup lang="ts">
 import Layout from './components/Layout.vue';
-const store = useStore();
-
-const students = computed(() => store.getStudents);
-console.log(students.value)
 </script>

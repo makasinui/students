@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-theme-provider theme="dark" with-background>
-      <v-main>
-        <v-container>
+    <v-theme-provider class="h-full" theme="dark" with-background>
+      <v-main class="h-full">
+        <v-container class="h-full flex flex-col">
           <slot />
         </v-container>
       </v-main>

@@ -1,10 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Main from "../pages/Main.vue";
+import Students from "../pages/Students.vue";
 
 const routes = [
     {
         path: '/',
-        component: Main
+        component: Students
     },
 ];
 
