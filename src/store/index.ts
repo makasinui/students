@@ -120,6 +120,10 @@ export const useStore = defineStore("store", {
             const newStudent = {...data, id: this.students.at(-1)!.id + 1};
             this.students.push({...newStudent})
             return newStudent;
+        },
+        deleteStudent(id: number) {
+            this.students = this.students.filter(student => student.id !== id);
+            return true;
         }
     }
 });

@@ -40,7 +40,7 @@
                         v-tooltip="'Удалить'"
                         class="cursor-pointer ml-1"
                         icon="mdi-delete"
-                        @click="emit('delete', row.id)"
+                        @click="() => {showDelete = true; deleteItem = row}"
                     />
                 </td>
             </tr>
@@ -53,6 +53,18 @@
         @update-page="(e: number) => emit('updatePage', e)"
         @update-per-page="(e: number) => emit('updatePerPage', e)"
     />
+    <v-dialog class="p-12" v-model="showDelete" width="auto">
+        <v-card title="Подтвердите удаление" max-width="400">
+            <template #actions>
+                <v-btn @click="showDelete = false" color="error">
+                    Отмена
+                </v-btn>
+                <v-btn @click="confirmDelete" color="success">
+                    ОК
+                </v-btn>
+            </template>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script setup lang="ts">
@@ -68,12 +80,19 @@ const props = defineProps<{
 }>();
 
 const search = ref();
+const showDelete = ref(false);
+const deleteItem = ref();
 
 const sort = ref<Sort>({
     name: '',
     desc: true,
     clear: false
 })
+
+const confirmDelete = () => {
+    emit('delete', deleteItem.value.id)
+    showDelete.value = false
+}
 
 const enableSort = (name: string) => {
     if(sort.value.clear) {

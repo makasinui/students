@@ -13,6 +13,7 @@
         @search="(e) => search = e"
         @sort="(e) => sort = e"
         @edit="(e) => edit(e)"
+        @delete="(e) => deleteItem(e)"
     >
         <template #sectionItems="{value}">
             <div v-for="section in value">
@@ -84,6 +85,11 @@ const fetch = () => {
 
     students.value = data
     lastPage.value = total;
+}
+
+const deleteItem = (id: number) => {
+    store.deleteStudent(id);
+    fetch()
 }
 
 onMounted(() => {
