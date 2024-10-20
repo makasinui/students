@@ -1,7 +1,12 @@
 <template>
-    <router-link class="mb-2 flex justify-end" to="/section">
-        <v-btn class="w-full">Создать</v-btn>
-    </router-link>
+    <div class="flex justify-end gap-4">
+        <router-link class="mb-2 flex justify-end" to="/">
+            <v-btn>Студенты</v-btn>
+        </router-link>
+        <router-link class="mb-2 flex justify-end" to="/section">
+            <v-btn>Создать</v-btn>
+        </router-link>
+    </div>
     <Table 
         :page="page" 
         :perPage="perPage" 

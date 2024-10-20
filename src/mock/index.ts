@@ -118,9 +118,14 @@ export const sections: Section[] = [
             date: '2000-01-01',
             studentId: 10
           },
+          {
+            id: 2,
+            date: '2000-01-01',
+            studentId: 1
+          },
         
           {
-            id: 1,
+            id: 3,
             date: '2000-01-01',
             studentId: 2
           },
@@ -137,7 +142,7 @@ export const sections: Section[] = [
             studentId: 11
           },
           {
-            id: 1,
+            id: 2,
             date: '2000-01-01',
             studentId: 3
           },
@@ -169,12 +174,12 @@ export const sections: Section[] = [
             studentId: 13
           },
           {
-            id: 5,
+            id: 2,
             date: '2000-01-01',
             studentId: 5
           },
           {
-            id: 1,
+            id: 3,
             date: '2000-01-01',
             studentId: 8
           },
@@ -190,17 +195,22 @@ export const sections: Section[] = [
             studentId: 14
           },
           {
-            id: 1,
+            id: 2,
+            date: '2000-01-01',
+            studentId: 1
+          },
+          {
+            id: 3,
             date: '2000-01-01',
             studentId: 6
           },
           {
-            id: 1,
+            id: 4,
             date: '2000-01-01',
             studentId: 7
           },
           {
-            id: 1,
+            id: 5,
             date: '2000-01-01',
             studentId: 9
           },
