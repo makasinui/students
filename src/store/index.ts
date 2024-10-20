@@ -35,15 +35,24 @@ export const useStore = defineStore("store", {
             const students = state.students;
             const sections = state.sections
 
-            // const sectionsWithStudents = sections.map(section => {
-            //     const assignedStudents = students.filter(student => student.sections.includes(section.id));
-            //     return {
-            //         ...section,
-            //         students: assignedStudents
-            //     }
-            // });
+            const sectionsWithStudents = sections.map(section => {
+                const sectionStudents = section.students.map(enrollment => {
+                    const student = students.find(s => s.id === enrollment.studentId);
+                    
+                    return {
+                        ...student,
+                        date: enrollment.date,
+                    };
+                });
+            
+                return {
+                    ...section,
+                    students: sectionStudents, // добавляем массив студентов в секцию
+                };
+            });
+            
 
-            return sections;
+            return sectionsWithStudents;
         }
     },
     actions: {
@@ -112,7 +121,7 @@ export const useStore = defineStore("store", {
             
             return {
                 data: sections[page - 1] as Section[],
-                total: students.length as number
+                total: sections.length as number
             };
         },
         getStudent(id: number) {

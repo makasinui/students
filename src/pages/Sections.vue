@@ -15,9 +15,9 @@
         @edit="(e) => edit(e)"
         @delete="(e) => deleteItem(e)"
     >
-        <template #sections="{value}">
-            <div v-for="section in value">
-                {{ section.name }}
+        <template #students="{value}">
+            <div v-for="student in value">
+                {{ student.fullName }}
             </div>
         </template>
     </Table>
@@ -47,25 +47,14 @@ const columns = [
         name: 'ID'
     },
     {
-        key: 'fullName',
-        name: 'ФИО'
+        key: 'name',
+        name: 'Название'
     },
     {
-        key: 'dateOfBirth',
-        name: 'Дата рождения'
+        key: 'students',
+        name: 'Студенты'
     },
-    {
-        key: 'sections',
-        name: 'Секции'
-    },
-    {
-        key: 'photoUrl',
-        name: 'Фото'
-    },
-    {
-        key: 'isActive',
-        name: 'Активность'
-    }
+    
 ];
 const edit = (id: number) => {
     route.push('/student/' + id)
@@ -89,7 +78,7 @@ const fetch = () => {
 }
 
 const deleteItem = (id: number) => {
-    store.deleteStudent(id);
+    store.вуд(id);
     fetch()
 }
 
