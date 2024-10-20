@@ -1,4 +1,7 @@
 <template>
+    <router-link class="mb-2 flex justify-end" to="/student">
+        <v-btn>Создать</v-btn>
+    </router-link>
     <Table 
         :page="page" 
         :perPage="perPage" 
