@@ -8,7 +8,6 @@
             <v-form @submit.prevent="update" v-model="valid" class="mt-4">
                 <v-text-field append-icon="mdi-asterisk" :rules="[rules('required'), rules('min', 10)]" label="ФИО" v-model="formData.fullName" />
                 <v-date-input append-icon="mdi-asterisk" :rules="[rules('required'), rules('date')]" v-model="formData.dateOfBirth" label="Дата рождения"  />
-                <v-select multiple :items="sectionItems" label="Секции" v-model="formData.sections" />
                 <v-text-field label="Фото" v-model="formData.photoUrl" />
                 <v-checkbox label="Активность" v-model="formData.isActive" />
                 <v-btn type="submit">Отправить</v-btn>
@@ -31,7 +30,6 @@ import { Student } from '../types';
 import { VDateInput } from 'vuetify/labs/VDateInput'
 
 import { rules } from '../consts/rules.ts';
-import { useDate } from 'vuetify';
 
 const route = useRoute();
 const store = useStore();
@@ -42,8 +40,6 @@ const valid = ref(false);
 const open = ref(false);
 
 const student = ref<Student>();
-const sections = computed(() => store.getSections)
-const sectionItems = sections.value.map(section => ({value: section.id, title: section.name}))
 const formData = ref()
 
 onMounted(() => {
@@ -56,7 +52,6 @@ onMounted(() => {
         id: student.value?.id ?? null,
         fullName: student.value?.fullName ?? "",
         dateOfBirth: student.value?.dateOfBirth ? new Date(student.value?.dateOfBirth) : null,
-        sections: student.value?.sections ?? [],
         photoUrl: student.value?.photoUrl ?? "",
         isActive: student.value?.isActive ?? false
     }

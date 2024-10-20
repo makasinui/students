@@ -12,10 +12,22 @@ export const useStore = defineStore("store", {
             const students = state.students;
             const sections = state.sections;
             
-            const studentsWithSections = students.map(student => ({
-              ...student,
-              sectionItems: student.sections.map(id => sections.find(section => section.id === id)!)  
-            }));
+            const studentsWithSections = students.map(student => {
+                const sectionItems = sections
+                    .filter(section => section.students.some(s => s.studentId === student.id))
+                    .map(section => {
+                        const studentEnrollment = section.students.find(s => s.studentId === student.id);
+                        return {
+                            ...section,
+                            enrollmentDate: studentEnrollment ? studentEnrollment.date : null // Дата зачисления
+                        };
+                    });
+            
+                return {
+                    ...student,
+                    sections: sectionItems
+                };
+            });
             
             return studentsWithSections;
         },
@@ -23,15 +35,15 @@ export const useStore = defineStore("store", {
             const students = state.students;
             const sections = state.sections
 
-            const sectionsWithStudents = sections.map(section => {
-                const assignedStudents = students.filter(student => student.sections.includes(section.id));
-                return {
-                    ...section,
-                    students: assignedStudents
-                }
-            });
+            // const sectionsWithStudents = sections.map(section => {
+            //     const assignedStudents = students.filter(student => student.sections.includes(section.id));
+            //     return {
+            //         ...section,
+            //         students: assignedStudents
+            //     }
+            // });
 
-            return sectionsWithStudents;
+            return sections;
         }
     },
     actions: {
@@ -94,11 +106,14 @@ export const useStore = defineStore("store", {
                 total: students.length as number
             };
         },
-        getPaginatedSections(page: number = 1, perPage: number = 10) {
+        getPaginatedSections(page: number = 1, perPage: number = 10, search: string = "", sort: Sort | undefined) {
             const store = useStore();
-            const sections = this.getPaginatedList(store.getSections, perPage);
+            const sections = this.getPaginatedList(store.getSections, perPage, search, sort);
             
-            return sections[page];
+            return {
+                data: sections[page - 1] as Section[],
+                total: students.length as number
+            };
         },
         getStudent(id: number) {
             const store = useStore();

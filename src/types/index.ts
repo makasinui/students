@@ -2,16 +2,20 @@ export type Student = {
     id: number;
     fullName: string;
     dateOfBirth: string;
-    sections: number[];
     photoUrl: string;
     isActive: boolean;
-    sectionItems?: Section[];
 };
+
+export type SectionWithStudent = {
+    id: number;
+    date: string;
+    studentId: number
+}
 
 export type Section = {
     id: number;
     name: string;
-    studentItems?: Student[];
+    students: SectionWithStudent[];
 };
 
 export type Sort = {

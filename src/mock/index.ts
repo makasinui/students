@@ -5,7 +5,6 @@ export const students: Student[] = [
         id: 1,
         fullName: 'Иванов Иван Иванович',
         dateOfBirth: '2000-04-15',
-        sections: [1],
         photoUrl: 'https://example.com/photos/ivanov.jpg',
         isActive: true
       },
@@ -13,7 +12,6 @@ export const students: Student[] = [
         id: 2,
         fullName: 'Петров Петр Петрович',
         dateOfBirth: '2001-07-22',
-        sections: [1,2],
         photoUrl: 'https://example.com/photos/petrov.jpg',
         isActive: false
       },
@@ -21,7 +19,6 @@ export const students: Student[] = [
         id: 3,
         fullName: 'Сидоров Сидор Сидорович',
         dateOfBirth: '1999-11-05',
-        sections: [3],
         photoUrl: 'https://example.com/photos/sidorov.jpg',
         isActive: true
       },
@@ -29,7 +26,6 @@ export const students: Student[] = [
         id: 4,
         fullName: 'Кузнецова Ольга Николаевна',
         dateOfBirth: '2002-08-11',
-        sections: [3,4],
         photoUrl: 'https://example.com/photos/kuznetsova.jpg',
         isActive: true
       },
@@ -37,7 +33,6 @@ export const students: Student[] = [
         id: 5,
         fullName: 'Михайлов Михаил Михайлович',
         dateOfBirth: '2000-02-28',
-        sections: [4],
         photoUrl: 'https://example.com/photos/mikhailov.jpg',
         isActive: false
       },
@@ -45,7 +40,6 @@ export const students: Student[] = [
         id: 6,
         fullName: 'Смирнова Елена Сергеевна',
         dateOfBirth: '1998-12-19',
-        sections: [4],
         photoUrl: 'https://example.com/photos/smirnova.jpg',
         isActive: true
       },
@@ -53,7 +47,6 @@ export const students: Student[] = [
         id: 7,
         fullName: 'Тихонов Андрей Петрович',
         dateOfBirth: '2003-09-30',
-        sections: [1,5],
         photoUrl: 'https://example.com/photos/tikhonov.jpg',
         isActive: false
       },
@@ -61,7 +54,6 @@ export const students: Student[] = [
         id: 8,
         fullName: 'Лебедева Анна Александровна',
         dateOfBirth: '2001-05-14',
-        sections: [2,3],
         photoUrl: 'https://example.com/photos/lebedeva.jpg',
         isActive: true
       },
@@ -69,7 +61,6 @@ export const students: Student[] = [
         id: 9,
         fullName: 'Григорьев Артем Викторович',
         dateOfBirth: '1999-10-23',
-        sections: [6,1],
         photoUrl: 'https://example.com/photos/grigorev.jpg',
         isActive: false
       },
@@ -77,7 +68,6 @@ export const students: Student[] = [
         id: 10,
         fullName: 'Зайцева Виктория Владимировна',
         dateOfBirth: '2002-03-17',
-        sections: [2,6],
         photoUrl: 'https://example.com/photos/zaitseva.jpg',
         isActive: true
       },
@@ -85,7 +75,6 @@ export const students: Student[] = [
         id: 11,
         fullName: 'Васильев Дмитрий Алексеевич',
         dateOfBirth: '2000-11-01',
-        sections: [3,4],
         photoUrl: 'https://example.com/photos/vasiliev.jpg',
         isActive: true
       },
@@ -93,7 +82,6 @@ export const students: Student[] = [
         id: 12,
         fullName: 'Попова Марина Андреевна',
         dateOfBirth: '2001-06-09',
-        sections: [1,4],
         photoUrl: 'https://example.com/photos/popova.jpg',
         isActive: false
       },
@@ -101,7 +89,6 @@ export const students: Student[] = [
         id: 13,
         fullName: 'Федоров Александр Евгеньевич',
         dateOfBirth: '1997-08-18',
-        sections: [2],
         photoUrl: 'https://example.com/photos/fedorov.jpg',
         isActive: true
       },
@@ -109,7 +96,6 @@ export const students: Student[] = [
         id: 14,
         fullName: 'Морозова Екатерина Павловна',
         dateOfBirth: '2003-12-24',
-        sections: [6],
         photoUrl: 'https://example.com/photos/morozova.jpg',
         isActive: true
       },
@@ -117,7 +103,6 @@ export const students: Student[] = [
         id: 15,
         fullName: 'Воробьев Алексей Николаевич',
         dateOfBirth: '1998-01-13',
-        sections: [5],
         photoUrl: 'https://example.com/photos/vorobyev.jpg',
         isActive: false
       }
@@ -126,26 +111,110 @@ export const students: Student[] = [
 export const sections: Section[] = [
     {
         id: 1,
-        name: 'Футбол'
+        name: 'Футбол',
+        students: [
+          {
+            id: 1,
+            date: '2000-01-01',
+            studentId: 10
+          },
+        
+          {
+            id: 1,
+            date: '2000-01-01',
+            studentId: 2
+          },
+          
+        ]
       },
       {
         id: 2,
-        name: 'Плавание'
+        name: 'Плавание',
+        students: [
+          {
+            id: 1,
+            date: '2000-01-01',
+            studentId: 11
+          },
+          {
+            id: 1,
+            date: '2000-01-01',
+            studentId: 3
+          },
+        ]
       },
       {
         id: 3,
-        name: 'Баскетбол'
+        name: 'Баскетбол',
+        students: [
+          {
+            id: 1,
+            date: '2000-01-01',
+            studentId: 12
+          },
+          {
+            id: 2,
+            date: '2000-01-01',
+            studentId: 4
+          },
+        ]
       },
       {
         id: 4,
-        name: 'Теннис'
+        name: 'Теннис',
+        students: [
+          {
+            id: 1,
+            date: '2000-01-01',
+            studentId: 13
+          },
+          {
+            id: 5,
+            date: '2000-01-01',
+            studentId: 5
+          },
+          {
+            id: 1,
+            date: '2000-01-01',
+            studentId: 8
+          },
+        ]
       },
       {
         id: 5,
-        name: 'Хоккей'
+        name: 'Хоккей',
+        students: [
+          {
+            id: 1,
+            date: '2000-01-01',
+            studentId: 14
+          },
+          {
+            id: 1,
+            date: '2000-01-01',
+            studentId: 6
+          },
+          {
+            id: 1,
+            date: '2000-01-01',
+            studentId: 7
+          },
+          {
+            id: 1,
+            date: '2000-01-01',
+            studentId: 9
+          },
+        ]
       },
       {
         id: 6,
-        name: 'Легкая атлетика'
+        name: 'Легкая атлетика',
+        students: [
+          {
+            id: 1,
+            date: '2000-01-01',
+            studentId: 15
+          }
+        ]
       }
 ]

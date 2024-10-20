@@ -1,12 +1,12 @@
 <template>
-    <router-link class="mb-2 flex justify-end" to="/student">
+    <router-link class="mb-2 flex justify-end" to="/sections">
         <v-btn class="w-full">Создать</v-btn>
     </router-link>
     <Table 
         :page="page" 
         :perPage="perPage" 
         :lastPage="lastPage"
-        :rows="students" 
+        :rows="sections" 
         :columns="columns"
         @updatePage="(e) => page = e"
         @updatePerPage="(e) => perPage = e"
@@ -27,7 +27,7 @@
 import { onMounted, ref, watch } from 'vue';
 import { useStore } from '../store';
 import Table from '../components/Table.vue';
-import { Sort, Student } from '../types';
+import { Sort, Section } from '../types';
 import { useRouter } from 'vue-router';
 
 const store = useStore();
@@ -36,7 +36,7 @@ const route = useRouter();
 const page = ref(1);
 const perPage = ref(10);
 const lastPage = ref(1);
-const students = ref<Student[]>([]);
+const sections = ref<Section[]>([]);
 
 const search = ref();
 const sort = ref<Sort>();
@@ -75,7 +75,7 @@ const fetch = () => {
     const {
         data, 
         total
-    } = store.getPaginatedStudents
+    } = store.getPaginatedSections
     (
         page.value, 
         perPage.value, 
@@ -83,7 +83,7 @@ const fetch = () => {
         sort.value
     );
 
-    students.value = data
+    sections.value = data
     console.log(data)
     lastPage.value = total;
 }
