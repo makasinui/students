@@ -18,7 +18,7 @@
                     multiple
                 />
                 <v-btn type="submit">Отправить</v-btn>
-                <router-link class="ml-3" to="/">
+                <router-link class="ml-3" to="/sections">
                     <v-btn>Отмена</v-btn>
                 </router-link>
             </v-form>
@@ -77,9 +77,13 @@ const update = () => {
     try {
         // const dateOfBirth = formData.value.dateOfBirth.toLocaleDateString('en-CA');
         formData.value.students = formData.value.students.map(studentId => {
-            const student = studentsItems.find(item => item.studentId === studentId);
-            return {...student}
+            if(typeof studentId === 'number') {
+                const student = studentsItems.find(item => item.studentId === studentId);
+                return {...student}
+            }
+            return {...studentId}
         })
+        console.log(formData.value.students)
         if(formData.value.id) {
             store.editSection(formData.value)
         } else {

@@ -173,8 +173,12 @@ export const useStore = defineStore("store", {
 
             const newSection = {...data, id: this.sections.at(-1)!.id + 1};
             this.sections.push({...newSection})
-            
+
             return newSection;
+        },
+        deleteSection(id: number) {
+            this.sections = this.sections.filter(section => section.id !== id);
+            return true;
         }
     }
 });

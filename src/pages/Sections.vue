@@ -78,7 +78,7 @@ const fetch = () => {
 }
 
 const deleteItem = (id: number) => {
-    store.вуд(id);
+    store.deleteSection(id);
     fetch()
 }
 
