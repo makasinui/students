@@ -37,26 +37,28 @@ export const useStore = defineStore("store", {
     actions: {
         // function for get paginated list it returns [[], [], []]
         getPaginatedList(arr: Student[] | Section[], perPage: number, search: string = '', sort: Sort | undefined) {
+            // чтобы всегда обновлялся state, даже если сортировка или фильтры = 0
+            let resultArr = [...arr];
             const paginatedList = [];
             if(search) {
                 const searchString = search.toLowerCase().trim();
-                console.log(searchString)
-                arr = arr.filter(item => {
-                    const fullNameMatches = item?.fullName?.toLowerCase()?.includes(searchString);
-                    const photoUrlMatches = item?.photoUrl?.toLowerCase()?.includes(searchString);
-                    const nameMatches = item?.name?.toLowerCase()?.includes(searchString);
+
+                resultArr = resultArr.filter(item => {
+                    const fullNameMatches = (item as Student)?.fullName?.toLowerCase()?.includes(searchString);
+                    const photoUrlMatches = (item as Student)?.photoUrl?.toLowerCase()?.includes(searchString);
+                    const nameMatches = (item as Section)?.name?.toLowerCase()?.includes(searchString);
                     const idMatches = item.id.toString().includes(searchString)
 
                     return fullNameMatches || photoUrlMatches || nameMatches || idMatches
                 })
             }
             if(sort?.name) {
-                arr = arr.sort((a,b) => {
+                resultArr = resultArr.sort((a,b) => {
                     const field = sort.name;
                     const desc = sort.desc
 
-                    const firstField = a[field];
-                    const secondField = b[field];
+                    const firstField = (a as any)[field];
+                    const secondField = (b as any)[field];
 
                     if(desc) {
                         if(typeof firstField === 'boolean' || typeof firstField === 'number') {
@@ -76,11 +78,11 @@ export const useStore = defineStore("store", {
                     return secondField.localeCompare(firstField)
                 })
             }
-            while(arr.length >= perPage) {
-                paginatedList.push(arr.slice(0, perPage));
-                arr = arr.slice(perPage, arr.length)
+            while(resultArr.length >= perPage) {
+                paginatedList.push(resultArr.slice(0, perPage));
+                resultArr = resultArr.slice(perPage, arr.length)
             }
-            paginatedList.push(arr);
+            paginatedList.push(resultArr);
             return paginatedList.filter(item => item.length);
         },
         getPaginatedStudents(page: number = 1, perPage: number = 10, search: string = "", sort: Sort | undefined) {
