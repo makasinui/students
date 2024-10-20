@@ -59,6 +59,27 @@ export const useStore = defineStore("store", {
             const sections = this.getPaginatedList(store.getSections, perPage);
             
             return sections[page];
+        },
+        getStudent(id: number) {
+            const store = useStore();
+            const students = store.getStudents;
+
+            return students.find(student => student.id === id);
+        },
+        editStudent(data: Student) {
+            const idx = this.students.findIndex(student => student.id === data.id);
+            try {
+                this.students[idx] = {...data};
+                return true;
+            } catch(err) {
+                return err;
+            }
+            
+        },
+        createStudent(data: Student): Student {
+            const newStudent = {...data, id: this.students.at(-1)!.id + 1};
+            this.students.push({...newStudent})
+            return newStudent;
         }
     }
 });

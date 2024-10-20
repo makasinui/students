@@ -7,6 +7,7 @@
         :columns="columns"
         @updatePage="(e) => page = e"
         @updatePerPage="(e) => perPage = e"
+        @edit="(e) => edit(e)"
     >
         <template #sectionItems="{value}">
             <div v-for="section in value">
@@ -21,8 +22,11 @@ import { onMounted, ref, watch } from 'vue';
 import { useStore } from '../store';
 import Table from '../components/Table.vue';
 import { Student } from '../types';
+import { useRouter } from 'vue-router';
 
 const store = useStore();
+const route = useRouter();
+
 const page = ref(1);
 const perPage = ref(10);
 const lastPage = ref(1);
@@ -54,6 +58,9 @@ const columns = [
         name: 'Активность'
     }
 ];
+const edit = (id: number) => {
+    route.push('/student/' + id)
+}
 
 const fetch = () => {
     const {data, total} = store.getPaginatedStudents(page.value, perPage.value);

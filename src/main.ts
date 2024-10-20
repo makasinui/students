@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createVuetify } from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import { createPinia } from "pinia";
+
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 

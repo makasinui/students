@@ -5,16 +5,32 @@
                 <th v-for="column in columns" :key="column.key">
                     {{ column.name }}
                 </th>
+                <th>
+                    Действия
+                </th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="row in rows" :key="row">
-                <td v-for="item in columns">
+            <tr v-for="row in rows" :key="row.id">
+                <td v-for="item in columns" :key="item.key">
                     <slot :name="item.key" :value="row[item.key]">
                         {{ row[item.key] }}
                     </slot>
                 </td>
-                
+                <td>
+                    <v-icon 
+                        v-tooltip="'Редактировать'"
+                        class="cursor-pointer"
+                        icon="mdi-pencil"
+                        @click="emit('edit', row.id)"
+                    />
+                    <v-icon 
+                        v-tooltip="'Удалить'"
+                        class="cursor-pointer ml-1"
+                        icon="mdi-delete"
+                        @click="emit('delete', row.id)"
+                    />
+                </td>
             </tr>
         </tbody>
     </v-table>
@@ -37,6 +53,6 @@ const props = defineProps<{
     lastPage: number
 }>();
 
-const emit = defineEmits(['updatePage', 'updatePerPage']);
+const emit = defineEmits(['updatePage', 'updatePerPage', 'edit', 'delete']);
 console.log(props.rows)
 </script>
