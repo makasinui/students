@@ -1,6 +1,6 @@
 <template>
     <router-link class="mb-2 flex justify-end" to="/student">
-        <v-btn>Создать</v-btn>
+        <v-btn class="w-full">Создать</v-btn>
     </router-link>
     <Table 
         :page="page" 
@@ -11,6 +11,7 @@
         @updatePage="(e) => page = e"
         @updatePerPage="(e) => perPage = e"
         @search="(e) => search = e"
+        @sort="(e) => sort = e"
         @edit="(e) => edit(e)"
     >
         <template #sectionItems="{value}">
@@ -25,7 +26,7 @@
 import { onMounted, ref, watch } from 'vue';
 import { useStore } from '../store';
 import Table from '../components/Table.vue';
-import { Student } from '../types';
+import { Sort, Student } from '../types';
 import { useRouter } from 'vue-router';
 
 const store = useStore();
@@ -35,7 +36,9 @@ const page = ref(1);
 const perPage = ref(10);
 const lastPage = ref(1);
 const students = ref<Student[]>([]);
+
 const search = ref();
+const sort = ref<Sort>();
 
 const columns = [
     {
@@ -68,7 +71,16 @@ const edit = (id: number) => {
 }
 
 const fetch = () => {
-    const {data, total} = store.getPaginatedStudents(page.value, perPage.value, search.value);
+    const {
+        data, 
+        total
+    } = store.getPaginatedStudents
+    (
+        page.value, 
+        perPage.value, 
+        search.value, 
+        sort.value
+    );
 
     students.value = data
     lastPage.value = total;
@@ -78,7 +90,7 @@ onMounted(() => {
     fetch()
 })
 
-watch([page, perPage, search], () => {
+watch([page, perPage, search, sort], () => {
     fetch()
 })
 </script>

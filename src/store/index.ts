@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { sections, students } from "../mock";
-import { Section, Student } from "../types";
+import { Section, Sort, Student } from "../types";
 
 export const useStore = defineStore("store", {
 	state: () => ({
@@ -36,13 +36,44 @@ export const useStore = defineStore("store", {
     },
     actions: {
         // function for get paginated list it returns [[], [], []]
-        getPaginatedList(arr: Student[] | Section[], perPage: number, search: string = '') {
+        getPaginatedList(arr: Student[] | Section[], perPage: number, search: string = '', sort: Sort | undefined) {
             const paginatedList = [];
             if(search) {
+                const searchString = search.toLowerCase().trim();
+                console.log(searchString)
                 arr = arr.filter(item => {
-                    return item?.fullName?.includes(search) || 
-                        item?.name?.includes(search) 
-                        || item?.photoUrl?.includes(search)
+                    const fullNameMatches = item?.fullName?.toLowerCase()?.includes(searchString);
+                    const photoUrlMatches = item?.photoUrl?.toLowerCase()?.includes(searchString);
+                    const nameMatches = item?.name?.toLowerCase()?.includes(searchString);
+                    const idMatches = item.id.toString().includes(searchString)
+
+                    return fullNameMatches || photoUrlMatches || nameMatches || idMatches
+                })
+            }
+            if(sort?.name) {
+                arr = arr.sort((a,b) => {
+                    const field = sort.name;
+                    const desc = sort.desc
+
+                    const firstField = a[field];
+                    const secondField = b[field];
+
+                    if(desc) {
+                        if(typeof firstField === 'boolean' || typeof firstField === 'number') {
+                            return Number(secondField) - Number(firstField)
+                        }
+                        if(Array.isArray(firstField)) {
+                            return firstField.length - secondField.length
+                        }
+                        return firstField.localeCompare(secondField)
+                    }
+                    if(typeof firstField === 'boolean' || typeof firstField === 'number') {
+                        return Number(firstField) - Number(secondField)
+                    }
+                    if(Array.isArray(firstField)) {
+                        return secondField.length - firstField.length
+                    }
+                    return secondField.localeCompare(firstField)
                 })
             }
             while(arr.length >= perPage) {
@@ -52,10 +83,10 @@ export const useStore = defineStore("store", {
             paginatedList.push(arr);
             return paginatedList.filter(item => item.length);
         },
-        getPaginatedStudents(page: number = 1, perPage: number = 10, search: string = "") {
+        getPaginatedStudents(page: number = 1, perPage: number = 10, search: string = "", sort: Sort | undefined) {
             const store = useStore();
-            const students = this.getPaginatedList(store.getStudents, perPage, search);
-            console.log(search, students)
+            const students = this.getPaginatedList(store.getStudents, perPage, search, sort);
+            
             return {
                 data: students[page - 1] as Student[],
                 total: students.length as number

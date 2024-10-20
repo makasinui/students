@@ -13,3 +13,9 @@ export type Section = {
     name: string;
     studentItems?: Student[];
 };
+
+export type Sort = {
+    name: string;
+    desc: boolean;
+    clear: boolean;
+}

@@ -1,19 +1,21 @@
 <template>
-      <v-text-field
+    <v-text-field
         v-model="search"
-        label="Search"
+        label="Поиск"
         prepend-inner-icon="mdi-magnify"
+        class="mb-2"
         variant="outlined"
         @update:model-value="(e) => emit('search', e)"
         hide-details
         single-line
-      />
+    />
     <v-table>
-        
         <thead>
             <tr>
-                <th v-for="column in columns" :key="column.key">
+                <th v-for="column in columns" :key="column.key" class="cursor-pointer group" @click="enableSort(column.key)">
                     {{ column.name }}
+                    <v-icon v-if="sort.name === column.key" :icon="`mdi-arrow-${sort.desc ? 'down' : 'up'}`" />
+                    <v-icon v-else class="text-gray-400 opacity-0 group-hover:!opacity-50" icon="mdi-arrow-up" />
                 </th>
                 <th>
                     Действия
@@ -56,6 +58,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Pagination from './Pagination.vue';
+import { Sort } from '../types';
 const props = defineProps<{
     columns: {key: string, name: string}[]
     rows: any[]
@@ -66,6 +69,34 @@ const props = defineProps<{
 
 const search = ref();
 
-const emit = defineEmits(['updatePage', 'updatePerPage', 'edit', 'delete', 'search']);
+const sort = ref<Sort>({
+    name: '',
+    desc: true,
+    clear: false
+})
+
+const enableSort = (name: string) => {
+    if(sort.value.clear) {
+        sort.value = {
+            name: '',
+            desc: true,
+            clear: false
+        }
+        emit('sort', sort.value)
+        return
+    }
+    const isEnabled = sort.value.name === name;
+    const isDesc = isEnabled ? true : false;
+
+    sort.value = {
+        name,
+        desc: isDesc,
+        // if we enable sorting for 2 times, next tick will be clear sorting
+        clear: isEnabled && isDesc
+    }
+    emit('sort', sort.value)
+}
+
+const emit = defineEmits(['updatePage', 'updatePerPage', 'edit', 'delete', 'search', 'sort']);
 
 </script>
