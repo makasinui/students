@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Students from "../pages/Students.vue";
-import EditStudent from "../components/EditStudent.vue";
+import EditStudent from "../pages/EditStudent.vue";
 import Sections from "../pages/Sections.vue";
+import EditSection from "../pages/EditSection.vue";
 
 const routes = [
     {
@@ -15,6 +16,10 @@ const routes = [
     {
         path: '/sections',
         component: Sections
+    },
+    {
+        path: '/section/:id?',
+        component: EditSection
     }
 ];
 

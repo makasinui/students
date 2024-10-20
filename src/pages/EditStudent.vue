@@ -25,8 +25,8 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useStore } from '../store';
-import { Student } from '../types';
+import { useStore } from '../store/index.ts';
+import { Student } from '../types/index.ts';
 import { VDateInput } from 'vuetify/labs/VDateInput'
 
 import { rules } from '../consts/rules.ts';

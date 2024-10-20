@@ -1,5 +1,5 @@
 <template>
-    <router-link class="mb-2 flex justify-end" to="/sections">
+    <router-link class="mb-2 flex justify-end" to="/section">
         <v-btn class="w-full">Создать</v-btn>
     </router-link>
     <Table 
@@ -17,7 +17,7 @@
     >
         <template #students="{value}">
             <div v-for="student in value">
-                {{ student.fullName }}
+                {{ student.head.fullName }}
             </div>
         </template>
     </Table>
@@ -57,7 +57,7 @@ const columns = [
     
 ];
 const edit = (id: number) => {
-    route.push('/student/' + id)
+    route.push('/section/' + id)
 }
 
 const fetch = () => {
