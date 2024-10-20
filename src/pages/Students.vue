@@ -10,6 +10,7 @@
         :columns="columns"
         @updatePage="(e) => page = e"
         @updatePerPage="(e) => perPage = e"
+        @search="(e) => search = e"
         @edit="(e) => edit(e)"
     >
         <template #sectionItems="{value}">
@@ -34,6 +35,7 @@ const page = ref(1);
 const perPage = ref(10);
 const lastPage = ref(1);
 const students = ref<Student[]>([]);
+const search = ref();
 
 const columns = [
     {
@@ -66,7 +68,7 @@ const edit = (id: number) => {
 }
 
 const fetch = () => {
-    const {data, total} = store.getPaginatedStudents(page.value, perPage.value);
+    const {data, total} = store.getPaginatedStudents(page.value, perPage.value, search.value);
 
     students.value = data
     lastPage.value = total;
@@ -76,7 +78,7 @@ onMounted(() => {
     fetch()
 })
 
-watch([page, perPage], () => {
+watch([page, perPage, search], () => {
     fetch()
 })
 </script>

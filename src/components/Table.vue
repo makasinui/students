@@ -1,5 +1,15 @@
 <template>
+      <v-text-field
+        v-model="search"
+        label="Search"
+        prepend-inner-icon="mdi-magnify"
+        variant="outlined"
+        @update:model-value="(e) => emit('search', e)"
+        hide-details
+        single-line
+      />
     <v-table>
+        
         <thead>
             <tr>
                 <th v-for="column in columns" :key="column.key">
@@ -44,6 +54,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import Pagination from './Pagination.vue';
 const props = defineProps<{
     columns: {key: string, name: string}[]
@@ -53,6 +64,8 @@ const props = defineProps<{
     lastPage: number
 }>();
 
-const emit = defineEmits(['updatePage', 'updatePerPage', 'edit', 'delete']);
-console.log(props.rows)
+const search = ref();
+
+const emit = defineEmits(['updatePage', 'updatePerPage', 'edit', 'delete', 'search']);
+
 </script>

@@ -36,8 +36,15 @@ export const useStore = defineStore("store", {
     },
     actions: {
         // function for get paginated list it returns [[], [], []]
-        getPaginatedList(arr: Student[] | Section[], perPage: number) {
+        getPaginatedList(arr: Student[] | Section[], perPage: number, search: string = '') {
             const paginatedList = [];
+            if(search) {
+                arr = arr.filter(item => {
+                    return item?.fullName?.includes(search) || 
+                        item?.name?.includes(search) 
+                        || item?.photoUrl?.includes(search)
+                })
+            }
             while(arr.length >= perPage) {
                 paginatedList.push(arr.slice(0, perPage));
                 arr = arr.slice(perPage, arr.length)
@@ -45,10 +52,10 @@ export const useStore = defineStore("store", {
             paginatedList.push(arr);
             return paginatedList.filter(item => item.length);
         },
-        getPaginatedStudents(page: number = 1, perPage: number = 10) {
+        getPaginatedStudents(page: number = 1, perPage: number = 10, search: string = "") {
             const store = useStore();
-            const students = this.getPaginatedList(store.getStudents, perPage);
-            
+            const students = this.getPaginatedList(store.getStudents, perPage, search);
+            console.log(search, students)
             return {
                 data: students[page - 1] as Student[],
                 total: students.length as number
